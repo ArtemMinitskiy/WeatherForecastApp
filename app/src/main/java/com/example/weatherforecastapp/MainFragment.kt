@@ -28,7 +28,7 @@ class MainFragment : Fragment() {
 
         tab_layout.tabGravity = TabLayout.GRAVITY_FILL
 
-        val adapter = MyPagerAdapter(activity!!.supportFragmentManager, tab_layout.tabCount)
+        val adapter = MyPagerAdapter(requireActivity().supportFragmentManager, tab_layout.tabCount)
         pager.adapter = adapter
 
         pager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tab_layout))
