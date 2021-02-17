@@ -29,12 +29,7 @@ class MasterFragment : Fragment() {
 
         rootView.master_text.text = "Master view, tab number: ${args.tabNumber}"
         rootView.detail_navigate_button.setOnClickListener {
-            findNavController().navigate(
-                MasterFragmentDirections.showDetailsFromMaster(
-                    args.tabNumber,
-                    "I am on a phone"
-                )
-            )
+            findNavController().navigate(MasterFragmentDirections.showDetailsFromMaster(args.tabNumber, "I am on a phone"))
         }
         return rootView
     }
@@ -44,7 +39,7 @@ class MasterFragment : Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
 
             val response = service.getWeather("46.48719996790696", "30.720671684814914")
-//            val response = service.getWeather()
+
             try {
                 withContext(Dispatchers.Main) {
                     if (response.isSuccessful) {
