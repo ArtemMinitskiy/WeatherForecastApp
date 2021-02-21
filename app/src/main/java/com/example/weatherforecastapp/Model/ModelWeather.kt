@@ -36,21 +36,4 @@ class ModelWeather{
                 '}'
     }
 }
-//data class ModelWeather(
-//    val cod: String? = null,
-//    val message: String? = null,
-//    val cnt: String? = null,
-//    val listWeather: ArrayList<ListWeather>? = null,
-//    val city: City? = null) {
-//
-//    override fun toString(): String {
-//        return "ModelWeather{" +
-//                "cod='" + cod + '\'' +
-//                ", message='" + message + '\'' +
-//                ", cnt='" + cnt + '\'' +
-//                ", city=" + city +
-//                ", listWeather=" + listWeather +
-//                '}'
-//    }
-//}
 

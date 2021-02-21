@@ -21,7 +21,7 @@ class ListWeather {
 
     @SerializedName("dt_txt")
     @Expose
-    val dt_txt: String? = null
+    val date: String? = null
 
     @SerializedName("clouds")
     @Expose
@@ -32,7 +32,7 @@ class ListWeather {
                 "main=" + main +
                 ", weather=" + weather +
                 ", wind=" + wind +
-                ", dt_txt='" + dt_txt + '\'' +
+                ", dt_txt='" + date + '\'' +
                 ", clouds=" + clouds +
                 '}'
     }

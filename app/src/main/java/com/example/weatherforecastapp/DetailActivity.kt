@@ -19,6 +19,7 @@ class DetailActivity : AppCompatActivity() {
             val graph = navInflater.inflate(R.navigation.detail)
 
             detail.navController.setGraph(graph, args.toBundle())
+
         }
     }
 }

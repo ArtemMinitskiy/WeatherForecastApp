@@ -33,6 +33,10 @@
         <argument
                 android:name="some_extra_info"
                 app:argType="string"/>
+        <argument
+            android:name="weather_item"
+            app:argType="com.example.weatherforecastapp.WeatherItem"
+            app:nullable="true" />
     </activity>
 
 </navigation>
