@@ -1,6 +1,6 @@
-package com.example.weatherforecastapp.Model
+package com.example.weatherforecastapp.Model.city
 
-import com.example.weatherforecastapp.Model.listweather.ListWeather
+import com.example.weatherforecastapp.Model.city.coordinates.Coordinates
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.util.ArrayList
@@ -14,15 +14,15 @@ class City {
     @Expose
     val country: String? = null
 
-//    @SerializedName("coord")
-//    @Expose
-//    val listCoordinates: ArrayList<Coordinates>? = null
+    @SerializedName("coord")
+    @Expose
+    val listCoordinates: Coordinates? = null
 
     override fun toString(): String {
         return "City{" +
                 "city='" + city + '\'' +
                 ", country='" + country + '\'' +
-//                ", coord='" + listCoordinates + '\'' +
+                ", coord='" + listCoordinates + '\'' +
                 '}'
     }
 }

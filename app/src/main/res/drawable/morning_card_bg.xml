@@ -5,8 +5,9 @@
             <solid android:color="#FBEF81" />
             <gradient
                 android:angle="90"
-                android:endColor="#EAC02C"
-                android:startColor="#FBEF81" />
+                android:endColor="#FBEF81"
+                android:startColor="#EAC02C" />
+            <corners android:radius="25dp"/>
         </shape>
     </item>
 </layer-list>

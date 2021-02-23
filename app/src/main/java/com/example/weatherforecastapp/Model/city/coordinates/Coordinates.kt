@@ -1,4 +1,4 @@
-package com.example.weatherforecastapp.Model
+package com.example.weatherforecastapp.Model.city.coordinates
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

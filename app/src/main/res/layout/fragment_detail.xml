@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -10,20 +9,20 @@
             type="com.example.weatherforecastapp.WeatherItem" />
     </data>
 
-<androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/linear"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:gravity="center"
-    android:orientation="vertical">
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:appb="http://schemas.android.com/tools"
+        android:id="@+id/constraint"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        appb:setBackground="@{weatherData.date.substring(11)}">
 
         <TextView
             android:id="@+id/city_detail_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="City"
-            android:textColor="#000000"
+            android:text="@{weatherData.city}"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -33,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:src="@drawable/ic_location_black"
+            android:src="@drawable/ic_location_white"
             app:layout_constraintEnd_toStartOf="@+id/coordinate_detail_text"
             app:layout_constraintTop_toBottomOf="@+id/city_detail_text" />
 
@@ -42,20 +41,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Coordinates"
-            android:textColor="#000000"
-            app:layout_constraintEnd_toStartOf="@+id/gd_left"
-            app:layout_constraintStart_toStartOf="@+id/gd_left"
+            android:text='@{weatherData.latitude + ", " + weatherData.longitude}'
+            android:textAppearance="?android:textAppearanceSmall"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toStartOf="@+id/gd_center"
+            app:layout_constraintStart_toStartOf="@+id/gd_center"
             app:layout_constraintTop_toBottomOf="@+id/city_detail_text" />
 
         <TextView
             android:id="@+id/temperature_detail_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:textAppearanceLarge"
-            android:text="Temperature"
             android:layout_marginStart="32dp"
             android:layout_marginTop="24dp"
+            android:text="@{weatherData.temperature}"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/gd_top" />
 
@@ -63,10 +64,11 @@
             android:id="@+id/feels_detail_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Feels like"
             android:layout_marginStart="32dp"
             android:layout_marginTop="8dp"
+            android:text='@{"Feels like " + weatherData.feels_like}'
             android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/temperature_detail_text" />
 
@@ -75,9 +77,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:textAppearance="?android:textAppearanceMedium"
-            app:layout_constraintEnd_toStartOf="@+id/gd_left"
-            app:layout_constraintStart_toStartOf="@+id/gd_left"
+            android:text="@{weatherData.description}"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toStartOf="@+id/gd_center"
+            app:layout_constraintStart_toStartOf="@+id/gd_center"
             app:layout_constraintTop_toBottomOf="@+id/feels_detail_text" />
 
         <TextView
@@ -85,21 +89,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:text="Date"
-            android:textAppearance="?android:textAppearanceMedium"
+            android:text="@{weatherData.date}"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/gd_left"
-            app:layout_constraintStart_toStartOf="@+id/gd_left" />
+            app:layout_constraintEnd_toStartOf="@+id/gd_center"
+            app:layout_constraintStart_toStartOf="@+id/gd_center" />
 
         <TextView
             android:id="@+id/clouds_detail_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Clouds"
+            android:text='@{"Clouds " + weatherData.clouds}'
             android:textAppearance="?android:textAppearanceMedium"
-            app:layout_constraintEnd_toStartOf="@+id/gd_left"
-            app:layout_constraintStart_toStartOf="@+id/gd_left"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toStartOf="@+id/gd_center"
+            app:layout_constraintStart_toStartOf="@+id/gd_center"
             app:layout_constraintTop_toBottomOf="@+id/description_detail_text" />
 
         <TextView
@@ -107,10 +113,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Wind speed"
+            android:text='@{"Wind " + weatherData.wind}'
             android:textAppearance="?android:textAppearanceMedium"
-            app:layout_constraintEnd_toStartOf="@+id/gd_left"
-            app:layout_constraintStart_toStartOf="@+id/gd_left"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toStartOf="@+id/gd_center"
+            app:layout_constraintStart_toStartOf="@+id/gd_center"
             app:layout_constraintTop_toBottomOf="@+id/clouds_detail_text" />
 
         <TextView
@@ -118,25 +125,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Humidity"
+            android:text='@{"Humidity " + weatherData.humidity}'
             android:textAppearance="?android:textAppearanceMedium"
-            app:layout_constraintEnd_toStartOf="@+id/gd_left"
-            app:layout_constraintStart_toStartOf="@+id/gd_left"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toStartOf="@+id/gd_center"
+            app:layout_constraintStart_toStartOf="@+id/gd_center"
             app:layout_constraintTop_toBottomOf="@+id/wind_detail_text" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/gd_left"
+            android:id="@+id/gd_center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            tools:layout_constraintGuide_percent="0.5" />
+            app:layout_constraintGuide_percent="0.5" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gd_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            tools:layout_constraintGuide_percent="0.2" />
+            app:layout_constraintGuide_percent="0.2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

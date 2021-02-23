@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.Navigation.findNavController
@@ -63,6 +65,20 @@ class WeatherRecyclerAdapter(weatherItems: ArrayList<WeatherItem>, tabNumber: In
         holder.cardView.setOnClickListener {
             navController = findNavController(holder.cardView)
             navController!!.navigate(MasterFragmentDirections.showDetailsFromMaster(position, "I am on a phone", weatherItem))
+        }
+    }
+
+    companion object{
+        @BindingAdapter("setCardViewBackground")
+        @JvmStatic
+        fun setCardViewBackground(cardView: CardView, time: String) {
+            when(time) {
+                "00:00:00", "03:00:00" -> cardView.setBackgroundResource(R.drawable.night_card_bg)
+                "06:00:00", "09:00:00" -> cardView.setBackgroundResource(R.drawable.morning_card_bg)
+                "12:00:00", "15:00:00" -> cardView.setBackgroundResource(R.drawable.day_card_bg)
+                "18:00:00", "21:00:00" -> cardView.setBackgroundResource(R.drawable.evening_card_bg)
+
+            }
         }
     }
 }

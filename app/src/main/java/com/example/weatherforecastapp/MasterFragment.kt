@@ -6,9 +6,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherforecastapp.Adapter.WeatherRecyclerAdapter
 import com.example.weatherforecastapp.Model.ModelWeather
 import kotlinx.android.synthetic.main.fragment_master.*
@@ -21,20 +23,13 @@ import retrofit2.HttpException
 class MasterFragment : Fragment() {
     lateinit var recyclerAdapter: WeatherRecyclerAdapter
     val args by navArgs<MasterFragmentArgs>()
+    var recyclerView: RecyclerView? = null
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-//        val binding: FragmentMasterBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_master, container, false)
-//        val rootView = binding.root
-
         val rootView = inflater.inflate(R.layout.fragment_master, container, false)
-
+        recyclerView = rootView.findViewById(R.id.recyclerview) as RecyclerView
         getWeatherDetail()
-
-//        rootView.master_text.text = "Master view, tab number: ${args.tabNumber}"
-//        rootView.detail_navigate_button.setOnClickListener {
-//            findNavController().navigate(MasterFragmentDirections.showDetailsFromMaster(args.tabNumber, "I am on a phone"))
-//        }
         return rootView
     }
 
@@ -46,14 +41,13 @@ class MasterFragment : Fragment() {
             try {
                 withContext(Dispatchers.Main) {
                     if (response.isSuccessful) {
-                        response.body()?.let { initRecyclerView(it) }
+                        response.body()?.let {
+                            initRecyclerView(it)
+//                            setSynteticBackground(it)
+                        }
 
-//                        Log.i("ArtREQUEST", "RESPONSE: getWeatherDetail()  ${response.body()!!.listWeather!!.get(0).main!!.temp}")
-//                        Log.i("ArtREQUEST", "RESPONSE:  ${response.body().toString()}")
-//                        Log.i("ArtREQUEST", "RESPONSE:  ${response.body()!!.city!!.city}" + ", ${response.body()!!.city!!.country}")
-//                        Log.i("ArtREQUEST", "RESPONSE:  ${response.body()!!.listWeather?.get(0)!!.weather!!.get(0).description}" +
-//                                ", ${FormatTemp(response.body()!!.listWeather?.get(0)!!.main!!.temp.toString()) + " \u00B0 C"}")
-//                        binding.weatherData = WeatherItem("", response.body()!!.listWeather!!.get(0).main!!.temp.toString(), "", "", "", "", "")
+                        Log.i("ArtREQUEST", "RESPONSE: getWeatherDetail()  ${response.body()!!.listWeather!!.get(0).date!!}")
+
                     } else {
                         Log.e("ArtREQUEST", "Error network operation failed with ${response.code()}")
                     }
@@ -66,30 +60,27 @@ class MasterFragment : Fragment() {
         }
     }
 
-    fun FormatTemp(temp: String): String? {
-        val i = temp.toFloat() - 273
-        return String.format("%.2f", i)
-    }
-
     private fun initRecyclerView(modelWeather: ModelWeather) {
-        city_text.text = modelWeather.city!!.city
+//        city_text.text = modelWeather.city!!.city
         val weatherItems = ArrayList<WeatherItem>()
         for (i in 0 until 8) {
-            weatherItems.add(WeatherItem(modelWeather.city.city,
-                    modelWeather.listWeather!!.get(i).main!!.temp,
-                    modelWeather.listWeather.get(i).weather!!.get(0).description,
+            weatherItems.add(WeatherItem(modelWeather.city!!.city,
+                    Utils().FormatTemp(modelWeather.listWeather!!.get(i).main!!.temp.toString()),
+                    modelWeather.listWeather.get(i).weather!!.get(0).description!!.capitalize(),
                     modelWeather.listWeather.get(i).weather!!.get(0).icon,
                     modelWeather.listWeather.get(i).date,
                     modelWeather.listWeather.get(i).wind!!.speed,
                     modelWeather.listWeather.get(i).clouds!!.clouds,
-                    modelWeather.listWeather.get(i).main!!.feels_like,
+                    Utils().FormatTemp(modelWeather.listWeather.get(i).main!!.feels_like.toString()),
                     modelWeather.listWeather.get(i).main!!.humidity,
-                    "modelWeather.city.listCoordinates!!.get(0).latitude",
-                    "modelWeather.city.listCoordinates.get(0).longitude"))
+                    modelWeather.city.listCoordinates!!.latitude,
+                    modelWeather.city.listCoordinates.longitude))
         }
         recyclerAdapter = WeatherRecyclerAdapter(weatherItems, args.tabNumber)
 
-        recyclerview.apply {
+        setBackground(modelWeather)
+        recyclerView!!.apply {
+            setBackgroundResource(setBackground(modelWeather))
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(requireActivity().applicationContext, LinearLayoutManager.VERTICAL, false)
             adapter = recyclerAdapter
@@ -97,5 +88,34 @@ class MasterFragment : Fragment() {
 
     }
 
+    private fun setBackground(modelWeather: ModelWeather): Int {
+        val time = modelWeather.listWeather!!.get(0).date!!.substring(11)
+        return when (time) {
+            "00:00:00" ->  R.drawable.night_bg
+            "03:00:00" ->  R.drawable.night_morning_gradient_gb
+            "06:00:00" ->  R.drawable.morning_bg
+            "09:00:00" ->  R.drawable.morning_day_gradient_bg
+            "12:00:00" ->  R.drawable.day_bg
+            "15:00:00" ->  R.drawable.day_evening_gradient_bg
+            "18:00:00" ->  R.drawable.evening_bg
+            "21:00:00" ->  R.drawable.evening_night_gradient_bg
+            else ->  R.drawable.night_bg
+        }
+    }
+
+    private fun setSynteticBackground(modelWeather: ModelWeather) {
+        val time = modelWeather.listWeather!!.get(0).date!!.substring(11)
+        when (time) {
+            "00:00:00" -> recyclerview!!.setBackgroundResource(R.drawable.night_bg)
+            "03:00:00" -> recyclerview!!.setBackgroundResource(R.drawable.night_morning_gradient_gb)
+            "06:00:00" -> recyclerview!!.setBackgroundResource(R.drawable.morning_bg)
+            "09:00:00" -> recyclerview!!.setBackgroundResource(R.drawable.morning_day_gradient_bg)
+            "12:00:00" -> recyclerview!!.setBackgroundResource(R.drawable.day_bg)
+            "15:00:00" -> recyclerview!!.setBackgroundResource(R.drawable.day_evening_gradient_bg)
+            "18:00:00" -> recyclerview!!.setBackgroundResource(R.drawable.evening_bg)
+            "21:00:00" -> recyclerview!!.setBackgroundResource(R.drawable.evening_night_gradient_bg)
+
+        }
+    }
 
 }
