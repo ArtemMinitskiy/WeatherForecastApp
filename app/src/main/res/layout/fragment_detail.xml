@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:appb="http://schemas.android.com/tools">
 
     <data>
 
@@ -9,7 +10,7 @@
             type="com.example.weatherforecastapp.WeatherItem" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:appb="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -33,6 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:src="@drawable/ic_location_white"
+            app:layout_constraintBottom_toBottomOf="@+id/coordinate_detail_text"
             app:layout_constraintEnd_toStartOf="@+id/coordinate_detail_text"
             app:layout_constraintTop_toBottomOf="@+id/city_detail_text" />
 
@@ -47,6 +49,17 @@
             app:layout_constraintEnd_toStartOf="@+id/gd_center"
             app:layout_constraintStart_toStartOf="@+id/gd_center"
             app:layout_constraintTop_toBottomOf="@+id/city_detail_text" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animationView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/gd_center"
+            app:layout_constraintTop_toTopOf="@+id/gd_top"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            appb:setAdapterAnimation="@{weatherData.weather_icon}" />
 
         <TextView
             android:id="@+id/temperature_detail_text"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:cardview="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -9,27 +9,31 @@
             type="com.example.weatherforecastapp.WeatherItem" />
     </data>
 
-    <androidx.cardview.widget.CardView xmlns:app="http://schemas.android.com/tools"
+    <androidx.cardview.widget.CardView xmlns:appb="http://schemas.android.com/tools"
         android:id="@+id/cardview"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_margin="16dp"
-        app:setCardViewBackground="@{weatherData.date.substring(11)}"
-        cardview:cardCornerRadius="25dp">
+        app:cardCornerRadius="25dp"
+        appb:setCardViewBackground="@{weatherData.date.substring(11)}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/weatherImage"
-                android:layout_width="110dp"
-                android:layout_height="75dp"
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/animationView"
+                android:layout_width="100dp"
+                android:layout_height="150dp"
                 android:layout_alignStart="@+id/dateText"
                 android:layout_alignParentTop="true"
-                cardview:layout_constraintEnd_toEndOf="parent"
-                cardview:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                appb:setAdapterAnimation="@{weatherData.weather_icon}" />
 
             <TextView
                 android:id="@+id/tempText"
@@ -41,8 +45,8 @@
                 android:text="@{weatherData.temperature}"
                 android:textColor="@color/white"
                 android:textSize="24sp"
-                cardview:layout_constraintStart_toStartOf="parent"
-                cardview:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/feelslikeText"
@@ -53,8 +57,8 @@
                 android:text='@{"Feels like " + weatherData.feels_like}'
                 android:textAppearance="?android:textAppearanceMedium"
                 android:textColor="@color/white"
-                cardview:layout_constraintStart_toStartOf="parent"
-                cardview:layout_constraintTop_toBottomOf="@+id/tempText" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tempText" />
 
             <TextView
                 android:id="@+id/descriptionText"
@@ -65,8 +69,8 @@
                 android:text="@{weatherData.description}"
                 android:textAppearance="?android:textAppearanceLarge"
                 android:textColor="@color/white"
-                cardview:layout_constraintStart_toStartOf="parent"
-                cardview:layout_constraintTop_toBottomOf="@+id/feelslikeText" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/feelslikeText" />
 
             <TextView
                 android:id="@+id/dateText"
@@ -78,8 +82,8 @@
                 android:text="@{weatherData.date.substring(11)}"
                 android:textAppearance="?android:textAppearanceSmall"
                 android:textColor="@color/white"
-                cardview:layout_constraintBottom_toBottomOf="parent"
-                cardview:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
