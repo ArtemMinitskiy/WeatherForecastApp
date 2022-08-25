@@ -16,14 +16,8 @@ import com.example.weatherforecastapp.WeatherItem
 import com.example.weatherforecastapp.databinding.WeatherItemBinding
 import java.util.*
 
-class WeatherRecyclerAdapter(weatherItems: ArrayList<WeatherItem>, tabNumber: Int) : RecyclerView.Adapter<WeatherRecyclerAdapter.ViewHolder>() {
-    private val weatherItems: ArrayList<WeatherItem>
+class WeatherRecyclerAdapter(private val weatherItems: ArrayList<WeatherItem>, val tabNumber: Int) : RecyclerView.Adapter<WeatherRecyclerAdapter.ViewHolder>() {
     var navController: NavController? = null
-    val tabNumber: Int
-    init {
-        this.weatherItems = weatherItems
-        this.tabNumber = tabNumber
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)

@@ -1,7 +1,6 @@
 package com.example.weatherforecastapp
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +24,7 @@ class ItemTabsFragment : Fragment() {
 
         val adapter = context?.let { it -> TabsPagerAdapter(childFragmentManager, it, 4) }
         rootView.viewpager.adapter = adapter
+        rootView.viewpager.offscreenPageLimit = 4
         rootView.tab_layout.setupWithViewPager(rootView.viewpager)
 
         for (i in 0 until rootView.tab_layout.tabCount) {

@@ -17,8 +17,7 @@ class WeatherItem(var city: String?, val temperature: String?, val description: 
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
-            parcel.readString()) {
-    }
+            parcel.readString())
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(city)

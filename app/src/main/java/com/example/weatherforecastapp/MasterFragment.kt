@@ -2,10 +2,10 @@ package com.example.weatherforecastapp
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
@@ -13,12 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherforecastapp.Adapter.WeatherRecyclerAdapter
 import com.example.weatherforecastapp.Model.ModelWeather
-import kotlinx.android.synthetic.main.fragment_master.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import retrofit2.HttpException
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -26,6 +20,7 @@ class MasterFragment : Fragment() {
     lateinit var recyclerAdapter: WeatherRecyclerAdapter
     val args by navArgs<MasterFragmentArgs>()
     var recyclerView: RecyclerView? = null
+    var city_text: TextView? = null
     var constraintLayout: ConstraintLayout? = null
     val calendar = Calendar.getInstance()
 
@@ -34,38 +29,15 @@ class MasterFragment : Fragment() {
         val rootView = inflater.inflate(R.layout.fragment_master, container, false)
         recyclerView = rootView.findViewById(R.id.recyclerview) as RecyclerView
         constraintLayout = rootView.findViewById(R.id.constraint) as ConstraintLayout
+        city_text = rootView.findViewById(R.id.city_text) as TextView
         setBackground(constraintLayout!!)
-        getWeatherDetail()
-        Log.i("ArtREQUEST", "RESPONSE: getWeatherDetail()  ${getWeatherDetail()}")
+        initRecyclerView(PreferencesProvider.getWeatherModel())
+
         return rootView
     }
 
-    fun getWeatherDetail() {
-        val service = RetrofitFactory.makeRetrofitService()
-        CoroutineScope(Dispatchers.IO).launch {
-            val response = service.getWeather("46.48719996790696", "30.720671684814914")
-
-            try {
-                withContext(Dispatchers.Main) {
-                    if (response.isSuccessful) {
-                        response.body()?.let { initRecyclerView(it) }
-//                        Log.i("ArtREQUEST", "RESPONSE: getWeatherDetail()  ${response.body()!!.listWeather!!.get(0).date!!}")
-
-                    } else {
-                        Log.e("ArtREQUEST", "Error network operation failed with ${response.code()}")
-                    }
-                }
-            } catch (e: HttpException) {
-                Log.e("ArtREQUEST", "Exception ${e.message}")
-            } catch (e: Throwable) {
-                Log.e("ArtREQUEST", "Ooops: Something else went wrong")
-            }
-        }
-
-    }
-
     private fun initRecyclerView(modelWeather: ModelWeather) {
-        city_text.text = modelWeather.city!!.city
+        city_text!!.text = modelWeather.city!!.city
         val weatherItems = ArrayList<WeatherItem>()
         for (i in 0 until 8) {
             weatherItems.add(WeatherItem(modelWeather.city.city,

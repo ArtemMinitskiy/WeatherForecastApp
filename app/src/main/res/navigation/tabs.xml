@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/tabs_nav_graph"
-            app:startDestination="@id/tabs_fragment">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tabs_nav_graph"
+            app:startDestination="@id/splashFragment">
 
     <fragment
             android:id="@+id/tabs_fragment"
@@ -12,6 +13,15 @@
         <argument
                 android:name="tab_number"
                 app:argType="integer"/>
+    </fragment>
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.example.weatherforecastapp.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_tabs_fragment"
+            app:destination="@id/tabs_fragment" />
     </fragment>
 
 
